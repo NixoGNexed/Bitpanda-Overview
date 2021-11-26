@@ -1,7 +1,3 @@
-# bitpandaOverview
+# Bitpanda Overview
 
-Insert the purpose of this project and some interesting infos here
-
-## Credits
-
-This project has been generated with 💙 and [easy-ui5](https://github.com/SAP)
+Upload you Bitpanda CSV and get an overview over your last transaction

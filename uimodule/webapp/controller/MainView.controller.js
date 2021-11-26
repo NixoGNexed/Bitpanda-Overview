@@ -1,8 +1,8 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller"
+    "com/myorg/bitpandaOverview/controller/BaseController",
 ],
     /**
-     * @param {typeof sap.ui.core.mvc.Controller} Controller
+     * @param {typeof sap.ui.core.mvc.Controller} BaseController
      */
     function (Controller) {
         "use strict";
