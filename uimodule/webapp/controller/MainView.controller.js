@@ -10,6 +10,10 @@ sap.ui.define([
         return Controller.extend("com.myorg.bitpandaOverview.controller.MainView", {
             onInit: function () {
 
+            },
+
+            onUploadCompleted: function (event) {
+
             }
         });
     });
