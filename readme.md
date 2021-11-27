@@ -1,3 +1,3 @@
 # Bitpanda Overview
 
-Upload you Bitpanda CSV and get an overview over your last transaction
+Upload you Bitpanda CSV and get an overview of your latest transactions

@@ -3,23 +3,23 @@
     xmlns:mvc="sap.ui.core.mvc"
     displayBlock="true"
     xmlns="sap.m"
-    xmlns:upload="sap.m.upload"
+    xmlns:u="sap.ui.unified"
 >
     <Shell id="shell">
         <App id="app">
             <pages>
                 <Page id="page" title="{i18n>title}">
                     <content>
-                        <upload:UploadSet 
+                       <u:FileUploader
                             id="fileUploader"
-                            fileTypes="CSV"
-                            uploadCompleted="onUploadCompleted">
-                            <upload:toolbar>
-                                <OverflowToolbar>
-                                    <Text text="Upload your Bitpanda CSV" />
-                                </OverflowToolbar>
-                            </upload:toolbar>
-                        </upload:UploadSet>
+                            name="myFileUpload"
+                            uploadUrl="upload/"
+                            fileType="CSV"
+                            tooltip="Upload your file to the local server" 
+                            sameFilenameAllowed="false"/>
+                        <Button
+                            text="Upload File"
+                            press="onUpload"/>
                     </content>
                 </Page>
             </pages>
