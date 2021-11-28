@@ -20,19 +20,6 @@
                         <Button
                             text="Upload File"
                             press="onUpload"/>
-                        
-                         <!-- <List 
-                            class="sapUiResponsiveMargin"
-                            width="auto"
-                            headerText="Transactions"
-                            items="{
-                                path: 'transactions>/transactions'
-                            }" >
-                            <StandardListItem
-                                title="{transactions>asset}"
-                                info="{transactions>amount} {transactions>fiat}"
-                                infoState="{= ${transactions>transactionType} === 'buy' ? 'Success' : 'Error'}"/>
-                        </List> -->
                     </content>
                 </Page>
             </pages>

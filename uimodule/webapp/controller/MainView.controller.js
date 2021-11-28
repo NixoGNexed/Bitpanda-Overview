@@ -15,8 +15,8 @@ sap.ui.define([
             },
 
             onUpload: function () {
-                let fU = this.getView().byId("fileUploader");
-                let domRef = fU.getFocusDomRef();
+                let fileUploader = this.byId("fileUploader");
+                let domRef = fileUploader.getFocusDomRef();
                 let file = domRef.files[0];
 
                 let reader = new FileReader();
@@ -62,8 +62,6 @@ sap.ui.define([
                         transactionsArray.push(transactionObj)
                     });
 
-                    console.log(transactionsArray);
-
                     let oModel = new JSONModel();
                     oModel.setData({
                         "name": name,
@@ -71,9 +69,8 @@ sap.ui.define([
                         "transactions": transactionsArray
                     });
                     this.getView().setModel(oModel, "transactions");
-                    console.log(oModel);
-
                 }.bind(this);
+                
                 reader.readAsText(file);
             }
         });
