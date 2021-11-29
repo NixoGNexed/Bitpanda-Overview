@@ -1,17 +1,24 @@
 sap.ui.define([
     "com/myorg/bitpandaOverview/controller/BaseController",
     'sap/ui/model/json/JSONModel',
+    'sap/ui/core/Fragment',
+    'sap/ui/Device',
+    'sap/ui/model/Sorter'
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} BaseController
      * @param {typeof sap.ui.model.json.JSONModel} JSONModel
+     * @param {typeof sap.ui.core.Fragment} Fragment
+     * @param {typeof sap.ui.Device} Device
+     * @param {typeof sap.ui.model.Sorter} Sorter
      */
-    function (Controller, JSONModel) {
+    function (Controller, JSONModel, Fragment, Device, Sorter) {
         "use strict";
 
         return Controller.extend("com.myorg.bitpandaOverview.controller.MainView", {
-            onInit: function () {
-
+            onInit: () => {
+                // Keeps reference to any of the created sap.m.ViewSettingsDialog-s in this sample
+                this._mViewSettingsDialogs = {};
             },
 
             onUpload: function () {
@@ -72,6 +79,64 @@ sap.ui.define([
                 }.bind(this);
                 
                 reader.readAsText(file);
-            }
+            },
+
+            getViewSettingsDialog: function (sDialogFragmentName) {
+                // var pDialog = this._mViewSettingsDialogs[sDialogFragmentName];
+                var pDialog;
+
+                if (!pDialog) {
+                    pDialog = Fragment.load({
+                        id: this.getView().getId(),
+                        name: sDialogFragmentName,
+                        controller: this
+                    }).then(function (oDialog) {
+                        if (Device.system.desktop) {
+                            oDialog.addStyleClass("sapUiSizeCompact");
+                        }
+                        return oDialog;
+                    });
+                    // this._mViewSettingsDialogs[sDialogFragmentName] = pDialog;
+                }
+                return pDialog;
+
+                // if (!this._oDialog) {
+                //     this._oDialog = sap.ui.xmlfragment(sDialogFragmentName);
+                //     this.getView().addDependent(this._oDialog);
+                //  }
+                //  return this._oDialog;
+            },
+
+            handleSortButtonPressed: function () {
+                this.getViewSettingsDialog("com.myorg.bitpandaOverview.view.SortDialog")
+				.then(function (oViewSettingsDialog) {
+					oViewSettingsDialog.open();
+				});
+            },
+
+            handleFilterButtonPressed: function () {
+
+            },
+
+            handleGroupButtonPressed: function () {
+
+            },
+            
+            handleSortDialogConfirm: function (oEvent) {
+                var oTable = this.byId("idProductsTable"),
+                    mParams = oEvent.getParameters(),
+                    oBinding = oTable.getBinding("items"),
+                    sPath,
+                    bDescending,
+                    aSorters = [];
+    
+                sPath = mParams.sortItem.getKey();
+                bDescending = mParams.sortDescending;
+                aSorters.push(new Sorter(sPath, bDescending));
+    
+                // apply the selected sort and group settings
+                oBinding.sort(aSorters);
+            },
+
         });
     });
