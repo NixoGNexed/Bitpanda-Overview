@@ -10,16 +10,20 @@
             <pages>
                 <Page id="page" title="{i18n>title}">
                     <content>
-                       <u:FileUploader
-                            id="fileUploader"
-                            name="myFileUpload"
-                            uploadUrl="upload/"
-                            fileType="CSV"
-                            tooltip="Upload your file to the local server" 
-                            sameFilenameAllowed="false"/>
-                        <Button
-                            text="Upload File"
-                            press="onUpload"/>
+                        <FlexBox justifyContent="Center" class="sapUiMediumMarginTop">
+                            <u:FileUploader
+                                id="fileUploader"
+                                class="sapUiTinyMarginEnd"
+                                name="myFileUpload"
+                                uploadUrl="upload/"
+                                fileType="CSV"
+                                tooltip="Upload your file to the local server" 
+                                sameFilenameAllowed="false"/>
+                            <Button
+                                text="Upload File"
+                                width="150px"
+                                press="onUpload"/>
+                        </FlexBox>
 
                         <Table 
                             id="idProductsTable"
