@@ -4,8 +4,7 @@
 	<ViewSettingsDialog
 		confirm="handleSortDialogConfirm">
 		<sortItems>
-			<ViewSettingsItem text="Transaction ID" key="transactionID" selected="true" />
-			<ViewSettingsItem text="Timestamp" key="timestamp" />
+			<ViewSettingsItem text="Timestamp" key="timestamp" selected="true" />
 			<ViewSettingsItem text="Asset" key="asset" />
 			<ViewSettingsItem text="Amount" key="amount" />
 			<ViewSettingsItem text="Fiat" key="fiat" />

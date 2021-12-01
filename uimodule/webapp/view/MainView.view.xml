@@ -46,9 +46,6 @@
                             </headerToolbar>
                             <columns>
                                 <Column>
-                                    <Text text="Transaction ID"></Text>
-                                </Column>
-                                <Column>
                                     <Text text="Timestamp"></Text>
                                 </Column>
                                 <Column>
@@ -64,8 +61,10 @@
                             <items>
                                 <ColumnListItem>
                                     <cells>
-                                        <Text text="{transactions>transactionID}"/>
-                                        <Text text="{transactions>timestamp}"/>
+                                        <Text text="{
+                                            path: 'transactions>timestamp',
+                                            formatter: 'formatDate'
+                                        }"/>
                                         <Text text="{transactions>asset}"/>
                                         <Text text="{transactions>amount}"/>
                                         <Text text="{transactions>fiat}"/>

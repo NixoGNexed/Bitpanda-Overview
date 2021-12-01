@@ -52,17 +52,17 @@ sap.ui.define([
                             "timestamp": transactionColumns[1],
                             "transactionType": transactionColumns[2],
                             "direction": transactionColumns[3],
-                            "amount": transactionColumns[4],
+                            "amount": parseFloat(transactionColumns[4]),
                             "fiat": transactionColumns[5],
-                            "assetAmount": transactionColumns[6],
+                            "assetAmount": parseFloat(transactionColumns[6]),
                             "asset": transactionColumns[7],
-                            "assetPrice": transactionColumns[8],
+                            "assetPrice": parseFloat(transactionColumns[8]),
                             "assetCurrency": transactionColumns[9],
                             "assetClass": transactionColumns[10],
-                            "productID": transactionColumns[11],
-                            "free": transactionColumns[12],
-                            "assetFee": transactionColumns[13],
-                            "spread": transactionColumns[14],
+                            "productID": parseInt( transactionColumns[11]),
+                            "fee": parseFloat(transactionColumns[12]),
+                            "assetFee": parseFloat(transactionColumns[13])  ,
+                            "spread": parseFloat(transactionColumns[14]),
                             "spreadCurrency": transactionColumns[15]
                         };
                         
@@ -83,7 +83,7 @@ sap.ui.define([
 
             getViewSettingsDialog: function (sDialogFragmentName) {
                 // var pDialog = this._mViewSettingsDialogs[sDialogFragmentName];
-                var pDialog;
+                let pDialog;
 
                 if (!pDialog) {
                     pDialog = Fragment.load({
@@ -123,7 +123,7 @@ sap.ui.define([
             },
             
             handleSortDialogConfirm: function (oEvent) {
-                var oTable = this.byId("idProductsTable"),
+                let oTable = this.byId("idProductsTable"),
                     mParams = oEvent.getParameters(),
                     oBinding = oTable.getBinding("items"),
                     sPath,
