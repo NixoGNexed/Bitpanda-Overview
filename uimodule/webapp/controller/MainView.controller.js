@@ -16,9 +16,19 @@ sap.ui.define([
         "use strict";
 
         return Controller.extend("com.myorg.bitpandaOverview.controller.MainView", {
-            onInit: () => {
+            onInit: function () {
                 // Keeps reference to any of the created sap.m.ViewSettingsDialog-s in this sample
                 this._mViewSettingsDialogs = {};
+
+                this.mGroupFunctions = {
+                    asset: function(oContext) {
+                        var name = oContext.getProperty("asset");
+                        return {
+                            key: name,
+                            text: name
+                        };
+                    }
+                };
             },
 
             onUpload: function () {
@@ -82,9 +92,8 @@ sap.ui.define([
             },
 
             getViewSettingsDialog: function (sDialogFragmentName) {
-                // var pDialog = this._mViewSettingsDialogs[sDialogFragmentName];
-                let pDialog;
-
+                let pDialog = this._mViewSettingsDialogs[sDialogFragmentName];
+                
                 if (!pDialog) {
                     pDialog = Fragment.load({
                         id: this.getView().getId(),
@@ -96,15 +105,9 @@ sap.ui.define([
                         }
                         return oDialog;
                     });
-                    // this._mViewSettingsDialogs[sDialogFragmentName] = pDialog;
+                    this._mViewSettingsDialogs[sDialogFragmentName] = pDialog;
                 }
                 return pDialog;
-
-                // if (!this._oDialog) {
-                //     this._oDialog = sap.ui.xmlfragment(sDialogFragmentName);
-                //     this.getView().addDependent(this._oDialog);
-                //  }
-                //  return this._oDialog;
             },
 
             handleSortButtonPressed: function () {
@@ -119,7 +122,10 @@ sap.ui.define([
             },
 
             handleGroupButtonPressed: function () {
-
+                this.getViewSettingsDialog("com.myorg.bitpandaOverview.view.GroupDialog")
+				.then(function (oViewSettingsDialog) {
+					oViewSettingsDialog.open();
+				});
             },
             
             handleSortDialogConfirm: function (oEvent) {
@@ -137,6 +143,28 @@ sap.ui.define([
                 // apply the selected sort and group settings
                 oBinding.sort(aSorters);
             },
+
+            handleGroupDialogConfirm: function (oEvent) {
+                let oTable = this.byId("idProductsTable"),
+                    mParams = oEvent.getParameters(),
+                    oBinding = oTable.getBinding("items"),
+                    sPath,
+                    bDescending,
+                    vGroup,
+                    aGroups = [];
+
+                if (mParams.groupItem) {
+                    sPath = mParams.groupItem.getKey();
+                    bDescending = mParams.groupDescending;
+                    vGroup = this.mGroupFunctions[sPath];
+                    aGroups.push(new Sorter(sPath, bDescending, vGroup));
+                    // apply the selected group settings
+                    oBinding.sort(aGroups);
+                } else if (this.groupReset) {
+                    oBinding.sort();
+                    this.groupReset = false;
+                }
+            }
 
         });
     });
