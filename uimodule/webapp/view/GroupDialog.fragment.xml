@@ -4,7 +4,7 @@
 	<ViewSettingsDialog
 		confirm="handleGroupDialogConfirm">
 		<groupItems>
-			<ViewSettingsItem text="Asset" key="asset" />
+			<ViewSettingsItem text="{i18n>columnAsset}" key="asset" />
 		</groupItems>
 	</ViewSettingsDialog>
 </core:FragmentDefinition>

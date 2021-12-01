@@ -20,7 +20,7 @@
                                 tooltip="Upload your file to the local server" 
                                 sameFilenameAllowed="false"/>
                             <Button
-                                text="Upload File"
+                                text="{i18n>uploadButton}"
                                 width="150px"
                                 press="onUpload"/>
                         </FlexBox>
@@ -32,7 +32,7 @@
                             }">
                             <headerToolbar>
                                 <OverflowToolbar>
-                                    <Title text="Transactions"/>
+                                    <Title text="{i18n>tableTitle}"/>
                                     <ToolbarSpacer/>
                                     <Button
                                         tooltip="Sort"
@@ -50,16 +50,16 @@
                             </headerToolbar>
                             <columns>
                                 <Column>
-                                    <Text text="Timestamp"></Text>
+                                    <Text text="{i18n>columnDate}"></Text>
                                 </Column>
                                 <Column>
-                                    <Text text="Asset"></Text>
+                                    <Text text="{i18n>columnAsset}"></Text>
                                 </Column>
                                 <Column>
-                                    <Text text="Amount"></Text>
+                                    <Text text="{i18n>columnAmount}"></Text>
                                 </Column>
                                 <Column>
-                                    <Text text="Fiat"></Text>
+                                    <Text text="{i18n>columnFiat}"></Text>
                                 </Column>
                             </columns>
                             <items>

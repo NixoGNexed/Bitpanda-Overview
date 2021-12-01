@@ -4,10 +4,10 @@
 	<ViewSettingsDialog
 		confirm="handleSortDialogConfirm">
 		<sortItems>
-			<ViewSettingsItem text="Timestamp" key="timestamp" selected="true" />
-			<ViewSettingsItem text="Asset" key="asset" />
-			<ViewSettingsItem text="Amount" key="amount" />
-			<ViewSettingsItem text="Fiat" key="fiat" />
+			<ViewSettingsItem text="{i18n>columnDate}" key="timestamp" selected="true" />
+			<ViewSettingsItem text="{i18n>columnAsset}" key="asset" />
+			<ViewSettingsItem text="{i18n>columnAmount}" key="amount" />
+			<ViewSettingsItem text="{i18n>columnFiat}" key="fiat" />
 		</sortItems>
 	</ViewSettingsDialog>
 </core:FragmentDefinition>

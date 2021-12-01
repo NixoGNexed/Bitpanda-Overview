@@ -44,6 +44,8 @@ sap.ui.define([
                     let transactionsCSV = strCSV.split("\n");
                     let headerCSV = transactionsCSV.splice(0, 7);
 
+                    transactionsCSV = transactionsCSV.filter(transaction => transaction);
+
                     let name = headerCSV[1].substring(
                         headerCSV[1].indexOf('"') + 1, 
                         headerCSV[1].lastIndexOf(",")
@@ -93,16 +95,18 @@ sap.ui.define([
 
             getViewSettingsDialog: function (sDialogFragmentName) {
                 let pDialog = this._mViewSettingsDialogs[sDialogFragmentName];
+                const mainView = this.getView();
                 
                 if (!pDialog) {
                     pDialog = Fragment.load({
-                        id: this.getView().getId(),
+                        id: mainView.getId(),
                         name: sDialogFragmentName,
                         controller: this
                     }).then(function (oDialog) {
                         if (Device.system.desktop) {
                             oDialog.addStyleClass("sapUiSizeCompact");
                         }
+                        mainView.addDependent(oDialog);   
                         return oDialog;
                     });
                     this._mViewSettingsDialogs[sDialogFragmentName] = pDialog;
