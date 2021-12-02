@@ -67,7 +67,7 @@
                                     <cells>
                                         <Text text="{
                                             path: 'transactions>timestamp',
-                                            formatter: 'formatter.formatDate'
+                                            formatter: '.formatter.formatDate'
                                         }"/>
                                         <Text text="{transactions>asset}"/>
                                         <Text text="{transactions>amount}"/>
