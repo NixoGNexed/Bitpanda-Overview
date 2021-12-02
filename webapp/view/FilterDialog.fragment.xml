@@ -1,0 +1,19 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<ViewSettingsDialog
+		confirm="handleFilterDialogConfirm">
+		<filterItems>
+			<ViewSettingsFilterItem
+				text="{i18n>columnAmount}"
+				key="amount"
+				multiSelect="false">
+				<items>
+					<ViewSettingsItem text="Less than 100" key="amount___LE___100___X" />
+					<ViewSettingsItem text="Between 100 and 500" key="amount___BT___100___500" />
+					<ViewSettingsItem text="More Than 500" key="amount___GT___500___X" />
+				</items>
+			</ViewSettingsFilterItem>
+		</filterItems>
+	</ViewSettingsDialog>
+</core:FragmentDefinition>

@@ -26,7 +26,7 @@
                         </FlexBox>
 
                         <Table 
-                            id="idProductsTable"
+                            id="idTransactionsTable"
                             items="{
                                 path: 'transactions>/transactions'
                             }">
@@ -48,6 +48,11 @@
                                         press="handleGroupButtonPressed"/>
                                 </OverflowToolbar>
                             </headerToolbar>
+                            <infoToolbar>
+                                <OverflowToolbar id="vsdFilterBar" visible="false">
+                                    <Text id="vsdFilterLabel" />
+                                </OverflowToolbar>
+                            </infoToolbar>
                             <columns>
                                 <Column>
                                     <Text text="{i18n>columnDate}"></Text>

@@ -3,7 +3,8 @@ sap.ui.define([
     'sap/ui/model/json/JSONModel',
     'sap/ui/core/Fragment',
     'sap/ui/Device',
-    'sap/ui/model/Sorter'
+    'sap/ui/model/Sorter',
+    'sap/ui/model/Filter'
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} BaseController
@@ -11,8 +12,9 @@ sap.ui.define([
      * @param {typeof sap.ui.core.Fragment} Fragment
      * @param {typeof sap.ui.Device} Device
      * @param {typeof sap.ui.model.Sorter} Sorter
+     * @param {typeof sap.ui.model.Filter} Filter
      */
-    function (Controller, JSONModel, Fragment, Device, Sorter) {
+    function (Controller, JSONModel, Fragment, Device, Sorter, Filter) {
         "use strict";
 
         return Controller.extend("com.myorg.bitpandaOverview.controller.MainView", {
@@ -22,7 +24,7 @@ sap.ui.define([
 
                 this.mGroupFunctions = {
                     asset: function(oContext) {
-                        var name = oContext.getProperty("asset");
+                        let name = oContext.getProperty("asset");
                         return {
                             key: name,
                             text: name
@@ -122,7 +124,10 @@ sap.ui.define([
             },
 
             handleFilterButtonPressed: function () {
-
+                this.getViewSettingsDialog("com.myorg.bitpandaOverview.view.FilterDialog")
+				.then(function (oViewSettingsDialog) {
+					oViewSettingsDialog.open();
+				});
             },
 
             handleGroupButtonPressed: function () {
@@ -133,7 +138,7 @@ sap.ui.define([
             },
             
             handleSortDialogConfirm: function (oEvent) {
-                let oTable = this.byId("idProductsTable"),
+                let oTable = this.byId("idTransactionsTable"),
                     mParams = oEvent.getParameters(),
                     oBinding = oTable.getBinding("items"),
                     sPath,
@@ -148,8 +153,32 @@ sap.ui.define([
                 oBinding.sort(aSorters);
             },
 
+            handleFilterDialogConfirm: function (oEvent) {
+                let oTable = this.byId("idTransactionsTable"),
+				mParams = oEvent.getParameters(),
+				oBinding = oTable.getBinding("items"),
+				aFilters = [];
+
+			mParams.filterItems.forEach(function(oItem) {
+				let aSplit = oItem.getKey().split("___"),
+					sPath = aSplit[0],
+					sOperator = aSplit[1],
+					sValue1 = aSplit[2],
+					sValue2 = aSplit[3],
+					oFilter = new Filter(sPath, sOperator, sValue1, sValue2);
+				aFilters.push(oFilter);
+			});
+
+			// apply filter settings
+			oBinding.filter(aFilters);
+
+			// update filter bar
+			this.byId("vsdFilterBar").setVisible(aFilters.length > 0);
+			this.byId("vsdFilterLabel").setText(mParams.filterString);
+            },
+
             handleGroupDialogConfirm: function (oEvent) {
-                let oTable = this.byId("idProductsTable"),
+                let oTable = this.byId("idTransactionsTable"),
                     mParams = oEvent.getParameters(),
                     oBinding = oTable.getBinding("items"),
                     sPath,
@@ -168,7 +197,12 @@ sap.ui.define([
                     oBinding.sort();
                     this.groupReset = false;
                 }
-            }
+            },
+
+            handleResetFilters: function() {
+                this.groupReset =  true;
+            },
+    
 
         });
     });

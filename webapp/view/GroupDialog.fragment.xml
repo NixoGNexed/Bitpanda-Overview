@@ -2,7 +2,8 @@
 	xmlns="sap.m"
 	xmlns:core="sap.ui.core">
 	<ViewSettingsDialog
-		confirm="handleGroupDialogConfirm">
+		confirm="handleGroupDialogConfirm"
+		resetFilters="handleResetFilters">
 		<groupItems>
 			<ViewSettingsItem text="{i18n>columnAsset}" key="asset" />
 		</groupItems>
