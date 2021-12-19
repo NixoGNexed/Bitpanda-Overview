@@ -1,0 +1,104 @@
+<mvc:View
+    controllerName="com.myorg.bitpandaOverview.controller.MainView"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:u="sap.ui.unified">
+    <Shell id="shell">
+        <App id="app">
+            <pages>
+                <Page id="page" title="{i18n>title}">
+                    <content>
+                        <FlexBox justifyContent="Center" class="sapUiMediumMarginTop">
+                            <u:FileUploader
+                                id="fileUploader"
+                                class="sapUiTinyMarginEnd"
+                                name="myFileUpload"
+                                uploadUrl="upload/"
+                                fileType="CSV"
+                                tooltip="Upload your file to the local server" 
+                                sameFilenameAllowed="false"/>
+                            <Button
+                                text="{i18n>uploadButton}"
+                                width="150px"
+                                press="onUpload"/>
+                        </FlexBox>
+
+                        <Table 
+                            id="idTransactionsTable"
+                            items="{
+                                path: 'transactions>/transactions'
+                            }">
+                            <headerToolbar>
+                                <OverflowToolbar>
+                                    <Title text="{i18n>tableTitle}: {transactions>/name}"/>
+                                    <ToolbarSpacer/>
+                                    <Select id="selectFilters"
+                                              change="handleSelectFilterPressed"
+                                              selectedItem="itemAll">
+                                        <core:Item key="Clear" text="{i18n>selectAll}" id="itemAll"/>
+                                        <core:Item key="Fiat" text="{i18n>selectBalance}"/>
+                                        <core:Item key="Cryptocurrency" text="{i18n>selectCrypto}"/>
+                                        <core:Item key="" text="{i18n>selectCrypto-I}"/>
+                                        <core:Item key="Stock (derivative)" text="{i18n>selectStocks}"/>
+                                        <core:Item key="ETF (derivative)" text="{i18n>selectETF}"/>
+                                        <core:Item key="" text="{i18n>selectMetals}"/>
+                                    </Select>
+                                    <Button
+                                        tooltip="Sort"
+                                        icon="sap-icon://sort"
+                                        press="handleSortButtonPressed"/>
+                                    <Button
+                                        tooltip="Filter"
+                                        icon="sap-icon://filter"
+                                        press="handleFilterButtonPressed"/>
+                                    <Button
+                                        tooltip="Group"
+                                        icon="sap-icon://group-2"
+                                        press="handleGroupButtonPressed"/>
+                                </OverflowToolbar>
+                            </headerToolbar>
+                            <infoToolbar>
+                                <OverflowToolbar id="vsdFilterBar" visible="false">
+                                    <Text id="vsdFilterLabel" />
+                                </OverflowToolbar>
+                            </infoToolbar>
+                            <columns>
+                                <Column>
+                                    <Text text="{i18n>columnDate}"></Text>
+                                </Column>
+                                <Column>
+                                    <Text text="{i18n>columnAsset}"></Text>
+                                </Column>
+                                <Column>
+                                    <Text text="{i18n>columnAmount}"></Text>
+                                </Column>
+                                <Column>
+                                    <Text text="{i18n>columnFiat}"></Text>
+                                </Column>
+                                <Column visible="false">
+                                    <Text text="{i18n>columnAssetClass}"></Text>
+                                </Column>
+                            </columns>
+                            <items>
+                                <ColumnListItem>
+                                    <cells>
+                                        <Text text="{
+                                            path: 'transactions>timestamp',
+                                            formatter: '.formatter.formatDate'
+                                        }"/>
+                                        <Text text="{transactions>asset}"/>
+                                        <Text text="{transactions>amount}"/>
+                                        <Text text="{transactions>fiat}"/>
+                                        <Text text="{transactions>assetClass}"/>
+                                    </cells>
+                                </ColumnListItem>
+                            </items>    
+                        </Table>
+                    </content>
+                </Page>
+            </pages>
+        </App>
+    </Shell>
+</mvc:View>
