@@ -16,9 +16,9 @@ sap.ui.define([
             let seconds = timestamp.substring(17, 19);
         
             let oFormat = DateFormat.getInstance({
-                pattern: "dd.mm.yyyy hh:mm:ss"
+                pattern: "yyyy-MM-dd"
             });
-        
+            
             return oFormat.format(new Date(year, month, day, hours, minutes, seconds));
         }
     };

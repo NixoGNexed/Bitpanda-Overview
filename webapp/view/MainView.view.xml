@@ -3,6 +3,7 @@
     xmlns:mvc="sap.ui.core.mvc"
     displayBlock="true"
     xmlns="sap.m"
+    xmlns:core="sap.ui.core"
     xmlns:u="sap.ui.unified">
     <Shell id="shell">
         <App id="app">
@@ -33,6 +34,17 @@
                                 <OverflowToolbar>
                                     <Title text="{i18n>tableTitle}: {transactions>/name}"/>
                                     <ToolbarSpacer/>
+                                    <ComboBox id="comboBoxFilters"
+                                              selectionChange="handleComboBoxFilterPressed"
+                                              selectedItem="itemAll">
+                                        <core:Item key="Clear" text="{i18n>comboBoxAll}" id="itemAll"/>
+                                        <core:Item key="Fiat" text="{i18n>comboBoxBalance}"/>
+                                        <core:Item key="Cryptocurrency" text="{i18n>comboBoxCrypto}"/>
+                                        <core:Item key="" text="{i18n>comboBoxCrypto-I}"/>
+                                        <core:Item key="Stock (derivative)" text="{i18n>comboBoxStocks}"/>
+                                        <core:Item key="ETF (derivative)" text="{i18n>comboBoxETF}"/>
+                                        <core:Item key="" text="{i18n>comboBoxMetals}"/>
+                                    </ComboBox>
                                     <Button
                                         tooltip="Sort"
                                         icon="sap-icon://sort"
@@ -65,6 +77,9 @@
                                 <Column>
                                     <Text text="{i18n>columnFiat}"></Text>
                                 </Column>
+                                <Column visible="false">
+                                    <Text text="{i18n>columnAssetClass}"></Text>
+                                </Column>
                             </columns>
                             <items>
                                 <ColumnListItem>
@@ -76,6 +91,7 @@
                                         <Text text="{transactions>asset}"/>
                                         <Text text="{transactions>amount}"/>
                                         <Text text="{transactions>fiat}"/>
+                                        <Text text="{transactions>assetClass}"/>
                                     </cells>
                                 </ColumnListItem>
                             </items>    

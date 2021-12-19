@@ -23,7 +23,7 @@ sap.ui.define([
                 this._mViewSettingsDialogs = {};
 
                 this.mGroupFunctions = {
-                    asset: function(oContext) {
+                    asset: function (oContext) {
                         let name = oContext.getProperty("asset");
                         return {
                             key: name,
@@ -40,7 +40,7 @@ sap.ui.define([
 
                 let reader = new FileReader();
 
-                reader.onload = function(e) {
+                reader.onload = function (e) {
                     let transactionsArray = [];
                     let strCSV = e.target.result;
                     let transactionsCSV = strCSV.split("\n");
@@ -49,7 +49,7 @@ sap.ui.define([
                     transactionsCSV = transactionsCSV.filter(transaction => transaction);
 
                     let name = headerCSV[1].substring(
-                        headerCSV[1].indexOf('"') + 1, 
+                        headerCSV[1].indexOf('"') + 1,
                         headerCSV[1].lastIndexOf(",")
                     );
 
@@ -72,14 +72,14 @@ sap.ui.define([
                             "asset": transactionColumns[7],
                             "assetPrice": parseFloat(transactionColumns[8]),
                             "assetCurrency": transactionColumns[9],
-                            "assetClass": transactionColumns[10],
-                            "productID": parseInt( transactionColumns[11]),
+                            "assetClass": transactionColumns[10].replaceAll('"', ''),
+                            "productID": parseInt(transactionColumns[11]),
                             "fee": parseFloat(transactionColumns[12]),
-                            "assetFee": parseFloat(transactionColumns[13])  ,
+                            "assetFee": parseFloat(transactionColumns[13]),
                             "spread": parseFloat(transactionColumns[14]),
                             "spreadCurrency": transactionColumns[15]
                         };
-                        
+
                         transactionsArray.push(transactionObj)
                     });
 
@@ -91,14 +91,14 @@ sap.ui.define([
                     });
                     this.getView().setModel(oModel, "transactions");
                 }.bind(this);
-                
+
                 reader.readAsText(file);
             },
 
             getViewSettingsDialog: function (sDialogFragmentName) {
                 let pDialog = this._mViewSettingsDialogs[sDialogFragmentName];
                 const mainView = this.getView();
-                
+
                 if (!pDialog) {
                     pDialog = Fragment.load({
                         id: mainView.getId(),
@@ -108,7 +108,7 @@ sap.ui.define([
                         if (Device.system.desktop) {
                             oDialog.addStyleClass("sapUiSizeCompact");
                         }
-                        mainView.addDependent(oDialog);   
+                        mainView.addDependent(oDialog);
                         return oDialog;
                     });
                     this._mViewSettingsDialogs[sDialogFragmentName] = pDialog;
@@ -116,27 +116,47 @@ sap.ui.define([
                 return pDialog;
             },
 
+            handleComboBoxFilterPressed: function () {
+                var comboBoxKey = this.byId("comboBoxFilters").getSelectedKey();
+
+                let oTable = this.byId("idTransactionsTable"),
+                    oBinding = oTable.getBinding("items"),
+                    aFilters = [];
+
+                if (comboBoxKey === 'Clear') {
+                    oBinding.filter(aFilters);
+                    return;
+                }
+
+                const oFilter = new Filter('assetClass', 'EQ', comboBoxKey, 'X')
+
+                aFilters.push(oFilter);
+
+                // apply filter settings
+                oBinding.filter(aFilters);
+            },
+
             handleSortButtonPressed: function () {
                 this.getViewSettingsDialog("com.myorg.bitpandaOverview.view.SortDialog")
-				.then(function (oViewSettingsDialog) {
-					oViewSettingsDialog.open();
-				});
+                    .then(function (oViewSettingsDialog) {
+                        oViewSettingsDialog.open();
+                    });
             },
 
             handleFilterButtonPressed: function () {
                 this.getViewSettingsDialog("com.myorg.bitpandaOverview.view.FilterDialog")
-				.then(function (oViewSettingsDialog) {
-					oViewSettingsDialog.open();
-				});
+                    .then(function (oViewSettingsDialog) {
+                        oViewSettingsDialog.open();
+                    });
             },
 
             handleGroupButtonPressed: function () {
                 this.getViewSettingsDialog("com.myorg.bitpandaOverview.view.GroupDialog")
-				.then(function (oViewSettingsDialog) {
-					oViewSettingsDialog.open();
-				});
+                    .then(function (oViewSettingsDialog) {
+                        oViewSettingsDialog.open();
+                    });
             },
-            
+
             handleSortDialogConfirm: function (oEvent) {
                 let oTable = this.byId("idTransactionsTable"),
                     mParams = oEvent.getParameters(),
@@ -144,37 +164,37 @@ sap.ui.define([
                     sPath,
                     bDescending,
                     aSorters = [];
-    
+
                 sPath = mParams.sortItem.getKey();
                 bDescending = mParams.sortDescending;
                 aSorters.push(new Sorter(sPath, bDescending));
-    
+
                 // apply the selected sort and group settings
                 oBinding.sort(aSorters);
             },
 
             handleFilterDialogConfirm: function (oEvent) {
                 let oTable = this.byId("idTransactionsTable"),
-				mParams = oEvent.getParameters(),
-				oBinding = oTable.getBinding("items"),
-				aFilters = [];
+                    mParams = oEvent.getParameters(),
+                    oBinding = oTable.getBinding("items"),
+                    aFilters = [];
 
-			mParams.filterItems.forEach(function(oItem) {
-				let aSplit = oItem.getKey().split("___"),
-					sPath = aSplit[0],
-					sOperator = aSplit[1],
-					sValue1 = aSplit[2],
-					sValue2 = aSplit[3],
-					oFilter = new Filter(sPath, sOperator, sValue1, sValue2);
-				aFilters.push(oFilter);
-			});
+                mParams.filterItems.forEach(function (oItem) {
+                    let aSplit = oItem.getKey().split("___"),
+                        sPath = aSplit[0],
+                        sOperator = aSplit[1],
+                        sValue1 = aSplit[2],
+                        sValue2 = aSplit[3],
+                        oFilter = new Filter(sPath, sOperator, sValue1, sValue2);
+                    aFilters.push(oFilter);
+                });
 
-			// apply filter settings
-			oBinding.filter(aFilters);
+                // apply filter settings
+                oBinding.filter(aFilters);
 
-			// update filter bar
-			this.byId("vsdFilterBar").setVisible(aFilters.length > 0);
-			this.byId("vsdFilterLabel").setText(mParams.filterString);
+                // update filter bar
+                this.byId("vsdFilterBar").setVisible(aFilters.length > 0);
+                this.byId("vsdFilterLabel").setText(mParams.filterString);
             },
 
             handleGroupDialogConfirm: function (oEvent) {
@@ -199,10 +219,10 @@ sap.ui.define([
                 }
             },
 
-            handleResetFilters: function() {
-                this.groupReset =  true;
+            handleResetFilters: function () {
+                this.groupReset = true;
             },
-    
+
 
         });
     });
