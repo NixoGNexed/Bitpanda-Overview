@@ -116,19 +116,19 @@ sap.ui.define([
                 return pDialog;
             },
 
-            handleComboBoxFilterPressed: function () {
-                var comboBoxKey = this.byId("comboBoxFilters").getSelectedKey();
+            handleSelectFilterPressed: function () {
+                var selectKey = this.byId("selectFilters").getSelectedKey();
 
                 let oTable = this.byId("idTransactionsTable"),
                     oBinding = oTable.getBinding("items"),
                     aFilters = [];
 
-                if (comboBoxKey === 'Clear') {
+                if (selectKey === 'Clear') {
                     oBinding.filter(aFilters);
                     return;
                 }
 
-                const oFilter = new Filter('assetClass', 'EQ', comboBoxKey, 'X')
+                const oFilter = new Filter('assetClass', 'EQ', selectKey, 'X')
 
                 aFilters.push(oFilter);
 

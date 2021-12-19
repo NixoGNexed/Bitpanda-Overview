@@ -34,17 +34,17 @@
                                 <OverflowToolbar>
                                     <Title text="{i18n>tableTitle}: {transactions>/name}"/>
                                     <ToolbarSpacer/>
-                                    <ComboBox id="comboBoxFilters"
-                                              selectionChange="handleComboBoxFilterPressed"
+                                    <Select id="selectFilters"
+                                              change="handleSelectFilterPressed"
                                               selectedItem="itemAll">
-                                        <core:Item key="Clear" text="{i18n>comboBoxAll}" id="itemAll"/>
-                                        <core:Item key="Fiat" text="{i18n>comboBoxBalance}"/>
-                                        <core:Item key="Cryptocurrency" text="{i18n>comboBoxCrypto}"/>
-                                        <core:Item key="" text="{i18n>comboBoxCrypto-I}"/>
-                                        <core:Item key="Stock (derivative)" text="{i18n>comboBoxStocks}"/>
-                                        <core:Item key="ETF (derivative)" text="{i18n>comboBoxETF}"/>
-                                        <core:Item key="" text="{i18n>comboBoxMetals}"/>
-                                    </ComboBox>
+                                        <core:Item key="Clear" text="{i18n>selectAll}" id="itemAll"/>
+                                        <core:Item key="Fiat" text="{i18n>selectBalance}"/>
+                                        <core:Item key="Cryptocurrency" text="{i18n>selectCrypto}"/>
+                                        <core:Item key="" text="{i18n>selectCrypto-I}"/>
+                                        <core:Item key="Stock (derivative)" text="{i18n>selectStocks}"/>
+                                        <core:Item key="ETF (derivative)" text="{i18n>selectETF}"/>
+                                        <core:Item key="" text="{i18n>selectMetals}"/>
+                                    </Select>
                                     <Button
                                         tooltip="Sort"
                                         icon="sap-icon://sort"
